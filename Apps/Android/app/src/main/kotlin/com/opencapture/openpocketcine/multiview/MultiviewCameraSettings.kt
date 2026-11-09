@@ -37,6 +37,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import com.opencapture.openpocketcine.R
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -81,10 +83,12 @@ internal fun multiviewSettingsCategories(camera: CameraModel, status: CameraStat
 internal fun multiviewSettingsLocked(sheet: LiveSheet, recording: Boolean): Boolean =
     recording && sheet in listOf(LiveSheet.FORMAT, LiveSheet.COLOR, LiveSheet.MODE)
 
+@Composable
 private fun LiveSheet.settingsLabel(): String = when (this) {
-    LiveSheet.EXPO -> "Exposure"
-    LiveSheet.WB -> "WB"
-    LiveSheet.ISO -> "ISO"
+    LiveSheet.EXPO -> stringResource(R.string.multiview_exposure)
+    LiveSheet.WB -> stringResource(R.string.multiview_readout_wb)
+    LiveSheet.ISO -> stringResource(R.string.multiview_readout_iso)
+    // ponytail: other tabs (shutter/focus/aperture/format/color/mode/audio) stay English via enum name
     else -> name.lowercase().replaceFirstChar { it.uppercase() }
 }
 
@@ -118,7 +122,7 @@ internal fun MultiviewCameraSettings(
     val ready = camera != null && controls != null && available
     // Live View's gimbal side panel container: trailing edge, width, glass, reveal and tap-outside dismissal.
     MonitorInspector(
-        title = "Camera settings",
+        title = stringResource(R.string.multiview_camera_settings),
         viewportWidth = width,
         viewportHeight = height,
         onDismiss = onDismiss,
@@ -131,9 +135,10 @@ internal fun MultiviewCameraSettings(
         safeBottom = safe.bottom,
         close = {
             // Inset from the panel corner; the 48dp target overflows the one-line header.
+            val closeLabel = stringResource(R.string.multiview_close_camera_settings)
             Box(Modifier.padding(end = 8.dp).height(20.dp).wrapContentHeight(unbounded = true)) {
                 Box(Modifier.size(48.dp).chromeClickable(onClick = onDismiss)
-                    .semantics { contentDescription = "Close camera settings"; role = Role.Button },
+                    .semantics { contentDescription = closeLabel; role = Role.Button },
                     contentAlignment = Alignment.Center) {
                     MonitorIcon(MonitorIcon.X, null, Modifier.size(13.dp), LiveDesign.muted)
                 }
@@ -205,8 +210,8 @@ internal fun MultiviewCameraSettings(
                     }
                 }
             } else {
-                Text(if (tile?.recovering == true) "Reconnect this camera before changing settings."
-                    else "Camera settings are available when its connection is ready.",
+                Text(if (tile?.recovering == true) stringResource(R.string.multiview_reconnect_before_settings)
+                    else stringResource(R.string.multiview_settings_when_ready),
                     color = LiveDesign.muted, style = LiveType.text(13f), modifier = Modifier.padding(vertical = 16.dp))
             }
         }

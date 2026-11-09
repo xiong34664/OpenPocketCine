@@ -22,8 +22,8 @@ import com.opencapture.openpocketcine.lut.LUTPicker
 import com.opencapture.openpocketcine.settings.PanelCloseButton
 
 object SettingsHelpCopy : OperatorHelpCopy("OpenPocketCine") {
-    const val PROTOCOL =
-        "Camera control speaks DUML over Bluetooth and the camera's Wi-Fi. No DJI SDK is bundled or required."
+    val PROTOCOL get() =
+        AppContextHolder.appContext.getString(R.string.setup_protocol)
 }
 
 object OpenPocketCineLinks {
@@ -70,7 +70,7 @@ internal fun operatorSetupApp(model: AppModel) = OperatorSetupApp(
         theme = "DJI Black", themeHelp = SettingsHelpCopy.THEME,
         protocol = "DUML / BLE + Wi-Fi", protocolHelp = SettingsHelpCopy.PROTOCOL,
         version = formatAppVersion(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE.toLong()),
-        versionHelp = SettingsHelpCopy.APP_VERSION, termsHelp = "How you can use OpenPocketCine.",
+        versionHelp = SettingsHelpCopy.APP_VERSION, termsHelp = AppContextHolder.appContext.getString(R.string.setup_terms_help),
     ),
     sourceUrl = OpenPocketCineLinks.SOURCE,
     diagnostics = OperatorDiagnostics(

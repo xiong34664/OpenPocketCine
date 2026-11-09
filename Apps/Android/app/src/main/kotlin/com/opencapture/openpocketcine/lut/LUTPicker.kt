@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.opencapture.openpocketcine.R
 import com.opencapture.opencine.cameracontrols.LUTPicker
 import com.opencapture.opencine.cameracontrols.LutPickerCopy
 import com.opencapture.opencine.cameracontrols.MonitorLutCategory
@@ -15,13 +17,14 @@ import com.opencapture.openpocketcine.AppModel
 import com.opencapture.openpocketcine.bridge.SwiftCore
 
 /** What this app's LUT picker says: the official cubes sit on the DJI tab with its own Auto. */
-internal val AppLutPickerCopy = LutPickerCopy(
+@Composable
+internal fun appLutPickerCopy() = LutPickerCopy(
     cameraTab = "DJI",
     autoId = LutCatalog.OFFICIAL_AUTO,
-    customHint = "Imported looks land here. Auto stays on Built-in or DJI.",
-    noLookCaption = "No matching look for this color / camera",
-    officialCubeCaption = "Official DJI Rec.709 cube",
-    cameraLooksCaption = "Official DJI looks for this color / camera",
+    customHint = stringResource(R.string.lut_custom_hint),
+    noLookCaption = stringResource(R.string.lut_no_look),
+    officialCubeCaption = stringResource(R.string.lut_official_cube),
+    cameraLooksCaption = stringResource(R.string.lut_camera_looks),
 )
 
 private var processLutLibrary: MonitorLutLibrary? = null
@@ -42,7 +45,7 @@ fun LUTPicker(model: AppModel, onClose: () -> Unit) {
     val assist = model.assist
     val status by model.session.chromeStatus.collectAsState()
     LUTPicker(
-        copy = AppLutPickerCopy,
+        copy = appLutPickerCopy(),
         selection = model.lutSelection,
         onSelect = model::updateLutSelection,
         library = appLutLibrary(LocalContext.current),

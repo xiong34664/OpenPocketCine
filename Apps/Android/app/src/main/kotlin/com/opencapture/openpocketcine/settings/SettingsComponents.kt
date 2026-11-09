@@ -27,6 +27,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.res.stringResource
+import com.opencapture.openpocketcine.AppContextHolder
+import com.opencapture.openpocketcine.R
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
@@ -61,22 +64,22 @@ data class SettingsColorDot(val name: String, val color: Color)
 object SettingsPalette {
     val highlight: List<SettingsColorDot> =
         listOf(
-            SettingsColorDot("White", LiveDesign.text),
-            SettingsColorDot("Amber", LiveDesign.amber),
-            SettingsColorDot("Red", LiveDesign.rec),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_white), LiveDesign.text),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_amber), LiveDesign.amber),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_red), LiveDesign.rec),
         )
     val midtone: List<SettingsColorDot> =
         listOf(
-            SettingsColorDot("Amber", LiveDesign.amber),
-            SettingsColorDot("Cyan", Color(0f, 0.85f, 0.9f)),
-            SettingsColorDot("Green", LiveDesign.good),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_amber), LiveDesign.amber),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_cyan), Color(0f, 0.85f, 0.9f)),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_green), LiveDesign.good),
         )
     val peaking: List<SettingsColorDot> =
         listOf(
-            SettingsColorDot("White", LiveDesign.text),
-            SettingsColorDot("Blue", Color(64f / 255f, 142f / 255f, 1f)),
-            SettingsColorDot("Red", LiveDesign.rec),
-            SettingsColorDot("Green", LiveDesign.good),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_white), LiveDesign.text),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_blue), Color(64f / 255f, 142f / 255f, 1f)),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_red), LiveDesign.rec),
+            SettingsColorDot(AppContextHolder.appContext.getString(R.string.settings_color_green), LiveDesign.good),
         )
 }
 
@@ -135,12 +138,13 @@ fun GlassPillSlider(value: Int, range: IntRange, onChange: (Int) -> Unit, modifi
 /** Floating xmark close button on a glass circle (iOS `CloseButton`, 37pt). */
 @Composable
 fun PanelCloseButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val closeLabel = stringResource(R.string.settings_close)
     Box(
         modifier
             .size(37.dp)
             .panelGlass(CircleShape)
             .settingsClickable(role = Role.Button, onClick = onClick)
-            .semantics { contentDescription = "Close" },
+            .semantics { contentDescription = closeLabel },
         contentAlignment = Alignment.Center,
     ) {
         MonitorIcon(

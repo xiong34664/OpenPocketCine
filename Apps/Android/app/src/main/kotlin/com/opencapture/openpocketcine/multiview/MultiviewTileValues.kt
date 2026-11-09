@@ -1,5 +1,8 @@
 package com.opencapture.openpocketcine.multiview
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.opencapture.openpocketcine.R
 import com.opencapture.opencine.appkit.MultiviewCameraAction
 import com.opencapture.opencine.appkit.MultiviewReadout
 import com.opencapture.opencine.appkit.MultiviewRecordContext
@@ -31,6 +34,7 @@ internal data class MultiviewTileReadouts(
     val recovery: String?,
 )
 
+@Composable
 internal fun multiviewTileReadouts(
     index: Int, name: String, model: String, settings: CameraStatus, timecode: String?,
     recordingObservation: Boolean?, recordingAvailable: Boolean, recordingBusy: Boolean,
@@ -41,12 +45,12 @@ internal fun multiviewTileReadouts(
 ): MultiviewTileReadouts {
     val elapsed = settings.recordElapsedSec.coerceAtLeast(0)
     val recording = when {
-        recordingBusy -> "WAIT"
-        recordingNote?.contains("rejected") == true || recordingNote?.contains("No confirmation") == true -> "REC ?"
-        recovering -> "HOLD"
-        !recordingAvailable || recordingObservation == null -> "REC —"
-        recordingObservation -> "REC ${elapsed / 60}:${(elapsed % 60).toString().padStart(2, '0')}"
-        else -> "STBY"
+        recordingBusy -> stringResource(R.string.multiview_tally_wait)
+        recordingNote?.contains("rejected") == true || recordingNote?.contains("No confirmation") == true -> stringResource(R.string.multiview_tally_rec_q)
+        recovering -> stringResource(R.string.multiview_tally_hold)
+        !recordingAvailable || recordingObservation == null -> stringResource(R.string.multiview_tally_rec_dash)
+        recordingObservation -> stringResource(R.string.multiview_tally_rec_time, elapsed / 60, elapsed % 60)
+        else -> stringResource(R.string.multiview_tally_stby)
     }
     val resolution = VideoResolution.fromRaw(settings.resolutionCode)?.label ?: "—"
     val fps = if (settings.fps > 0) "${settings.fps}p" else "—"
@@ -59,27 +63,29 @@ internal fun multiviewTileReadouts(
         recording = recording, isRecording = recordingObservation == true,
         format = "$resolution · $fps · $color",
         recovery = when {
-            failure != null -> "Connection needs attention"
-            recovering -> "Restoring picture…"
-            !hasPicture -> "Waiting for picture…"
+            failure != null -> stringResource(R.string.multiview_connection_attention)
+            recovering -> stringResource(R.string.multiview_restoring_picture)
+            !hasPicture -> stringResource(R.string.multiview_waiting_picture)
             else -> null
         },
     )
 }
 
+@Composable
 internal fun multiviewExposureReadouts(settings: CameraStatus): List<Pair<String, String>> = listOf(
-    "ISO" to if (settings.iso > 0) settings.iso.toString() else "—",
-    "SHUTTER" to if (settings.shutterDenom > 0) "1/${settings.shutterDenom}" else "—",
-    "WB" to when {
-        settings.wbMode == CameraCommands.WB_AUTO -> "Auto"
+    stringResource(R.string.multiview_readout_iso) to if (settings.iso > 0) settings.iso.toString() else "—",
+    stringResource(R.string.multiview_readout_shutter) to if (settings.shutterDenom > 0) "1/${settings.shutterDenom}" else "—",
+    stringResource(R.string.multiview_readout_wb) to when {
+        settings.wbMode == CameraCommands.WB_AUTO -> stringResource(R.string.multiview_readout_auto)
         settings.wbMode < 0 -> "—"
         settings.wbKelvin > 0 -> "${settings.wbKelvin}K"
         else -> "—"
     },
-    "FOCUS" to settings.focusLabel,
+    stringResource(R.string.multiview_readout_focus) to settings.focusLabel,
 )
 
 /** The program readouts and Grid's in-tile row. */
+@Composable
 internal fun multiviewStageReadouts(settings: CameraStatus): List<MultiviewReadout> =
     multiviewExposureReadouts(settings).map { (title, value) -> MultiviewReadout(title, value) }
 
@@ -93,6 +99,7 @@ internal object MultiviewTileAction {
 }
 
 /** The shared stage's values for one slot, null while it is empty. */
+@Composable
 internal fun MultiviewSession.stageTile(index: Int): MultiviewTile? {
     val tile = tiles[index]
     val camera = tile.camera ?: return null
@@ -116,34 +123,34 @@ internal fun MultiviewSession.stageTile(index: Int): MultiviewTile? {
                 text, detail = tile.failureMessage ?: tile.status,
                 inProgress = tile.failureMessage == null && !tile.networkVerified,
                 actions = if (tile.failureMessage == null) emptyList() else listOfNotNull(
-                    MultiviewCameraAction(MultiviewTileAction.EXPERIMENTAL, "Try experimental shared Wi-Fi", enabled = settled)
+                    MultiviewCameraAction(MultiviewTileAction.EXPERIMENTAL, stringResource(R.string.multiview_try_experimental), enabled = settled)
                         .takeIf { experimental },
-                    MultiviewCameraAction(MultiviewTileAction.RECONNECT, "Reconnect", enabled = settled),
+                    MultiviewCameraAction(MultiviewTileAction.RECONNECT, stringResource(R.string.multiview_reconnect), enabled = settled),
                     MultiviewCameraAction(
-                        MultiviewTileAction.REMOVE, "Remove", MultiviewCameraAction.Kind.DESTRUCTIVE, enabled = settled,
+                        MultiviewTileAction.REMOVE, stringResource(R.string.multiview_remove), MultiviewCameraAction.Kind.DESTRUCTIVE, enabled = settled,
                     ),
                 ),
             )
         },
         failure = tile.failureMessage,
-        footnote = "Remove this tile to enable Record all for your other cameras."
+        footnote = stringResource(R.string.multiview_remove_tile_note)
             .takeIf { tile.networkVerified && !camera.hasMultiviewPreview },
         actions = listOfNotNull(
             MultiviewCameraAction(
-                MultiviewCameraAction.LIVE_VIEW, "Open Live View", enabled = tile.controlHost != null && !tile.connecting,
+                MultiviewCameraAction.LIVE_VIEW, stringResource(R.string.multiview_open_live_view), enabled = tile.controlHost != null && !tile.connecting,
             ),
             MultiviewCameraAction(
                 MultiviewTileAction.RECORD,
-                if (tile.recordingObservation?.first == true) "Stop recording" else "Start recording",
+                if (tile.recordingObservation?.first == true) stringResource(R.string.multiview_stop_recording) else stringResource(R.string.multiview_start_recording),
                 MultiviewCameraAction.Kind.RECORD,
                 enabled = record.isExecutable && !groupRecordingBusy && !closing,
             ),
-            MultiviewCameraAction(MultiviewTileAction.LUT, if (tile.lutEnabled) "Disable Auto LUT" else "Enable Auto LUT"),
-            MultiviewCameraAction(MultiviewTileAction.RECONNECT, "Reconnect", enabled = settled),
-            MultiviewCameraAction(MultiviewTileAction.EXPERIMENTAL, "Try experimental shared Wi-Fi", enabled = settled)
+            MultiviewCameraAction(MultiviewTileAction.LUT, if (tile.lutEnabled) stringResource(R.string.multiview_disable_auto_lut) else stringResource(R.string.multiview_enable_auto_lut)),
+            MultiviewCameraAction(MultiviewTileAction.RECONNECT, stringResource(R.string.multiview_reconnect), enabled = settled),
+            MultiviewCameraAction(MultiviewTileAction.EXPERIMENTAL, stringResource(R.string.multiview_try_experimental), enabled = settled)
                 .takeIf { experimental },
             MultiviewCameraAction(
-                MultiviewTileAction.REMOVE, "Remove camera", MultiviewCameraAction.Kind.DESTRUCTIVE,
+                MultiviewTileAction.REMOVE, stringResource(R.string.multiview_remove_camera), MultiviewCameraAction.Kind.DESTRUCTIVE,
                 enabled = !busy && !tile.connecting && !groupRecordingBusy && !tile.recordingBusy && !closing,
             ),
         ),
