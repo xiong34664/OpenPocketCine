@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import com.opencapture.opencine.appkit.MonitorCaptureField
 import com.opencapture.opencine.appkit.captureField
 import com.opencapture.opencine.appkit.commit
@@ -61,7 +62,7 @@ internal fun AppModel.observedCaptureSessionState(status: CameraStatus): Capture
 internal fun AppModel.PocketCommonDrum(sheet: LiveSheet, status: CameraStatus, field: MonitorCaptureField?, enabled: Boolean) {
     val retained = retainedCapturePanelField(field, sheet, status.expoMode)
     if (retained == null) {
-        Text("Setting not available", color = LiveDesign.muted)
+        Text(stringResource(R.string.capture_setting_not_available), color = LiveDesign.muted)
     } else {
         val choices = retained.choices.filter { choice -> when (val value = choice.value) {
             is SettingValue.Iso -> value.value is ISOValue.Manual
@@ -109,7 +110,7 @@ internal fun AppModel.routeCaptureSetting(setting: CaptureSetting, field: Monito
             val editor = field?.editor
             if (editor != null && control.isCurrent(editor)) {
                 val value = commonFocusValue(setting.label, FocusTrackMode.fromRaw(status.focusTrack))
-                if (value != null) control.commit(value, editor, "FOCUS ${setting.label}")
+                if (value != null) control.commit(value, editor, AppContextHolder.appContext.getString(R.string.capture_focus, setting.label))
                 else applyCaptureFocusChoice(setting.label, status, this)
             }
         }
@@ -131,16 +132,16 @@ internal fun AppModel.captureAudioService(): CaptureAudioService? {
     val source = CaptureAudioSourceID(snapshot.session, snapshot.epoch)
     val status = session.status.value
     return CaptureAudioService(source, listOf(
-        CaptureAudioField(CaptureAudioControl.CHANNEL, "Channel",
+        CaptureAudioField(CaptureAudioControl.CHANNEL, AppContextHolder.appContext.getString(R.string.capture_audio_channel),
             CaptureAudioChannel.entries.map { CaptureAudioValue.Channel(it) },
             CaptureAudioChannel.entries.firstOrNull { it.raw == status.audioChannel }?.let { CaptureAudioValue.Channel(it) }),
-        CaptureAudioField(CaptureAudioControl.WIND, "Wind",
+        CaptureAudioField(CaptureAudioControl.WIND, AppContextHolder.appContext.getString(R.string.capture_audio_wind),
             listOf(CaptureAudioValue.Wind(false), CaptureAudioValue.Wind(true)),
             status.windNr.takeIf { it in 0..1 }?.let { CaptureAudioValue.Wind(it == 1) }),
-        CaptureAudioField(CaptureAudioControl.DIRECTION, "Direction",
+        CaptureAudioField(CaptureAudioControl.DIRECTION, AppContextHolder.appContext.getString(R.string.capture_audio_direction),
             CaptureAudioDirection.entries.map { CaptureAudioValue.Direction(it) },
             CaptureAudioDirection.entries.firstOrNull { it.raw == status.directionalAudio }?.let { CaptureAudioValue.Direction(it) }),
-        CaptureAudioField(CaptureAudioControl.VOCAL, "Vocal",
+        CaptureAudioField(CaptureAudioControl.VOCAL, AppContextHolder.appContext.getString(R.string.capture_audio_vocal),
             listOf(CaptureAudioValue.Vocal(false), CaptureAudioValue.Vocal(true)),
             status.vocalBoost.takeIf { it in 0..1 }?.let { CaptureAudioValue.Vocal(it == 1) })
     ), commit = { value ->
@@ -148,7 +149,7 @@ internal fun AppModel.captureAudioService(): CaptureAudioService? {
         if (session.connectedCamera?.id != owner || !monitorLayout().audio || current == null ||
             CaptureAudioSourceID(current.session, current.epoch) != source) CaptureAudioCommitResult.UNAVAILABLE
         else if (session.phase != com.opencapture.opencine.vocabulary.ConnectionPhase.LIVE || session.controlBusy.value) {
-            session.presentControlNote("Audio control refused")
+            session.presentControlNote(AppContextHolder.appContext.getString(R.string.capture_audio_refused))
             CaptureAudioCommitResult.REFUSED
         } else {
             when (value) {

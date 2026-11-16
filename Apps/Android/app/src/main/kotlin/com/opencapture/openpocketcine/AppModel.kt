@@ -93,7 +93,12 @@ class AppModel(
     connectPort: (DjiCameraSession) -> DjiConnectPort = { it },
     val reviewLaunch: com.opencapture.monitorui.ReviewLaunch? = null,
 ) : GamepadHost, GimbalChromeHost, CaptureSheetHost, OperatorSetupModel, AutoCloseable {
-    private val appContext = context.applicationContext
+    private val appContext = context.applicationContext.also {
+        AppContextHolder.init(it)
+        com.opencapture.monitorui.MonitorContext.init(it)
+        com.opencapture.opencine.appkit.AppkitContext.init(it)
+        com.opencapture.opencine.cameracontrols.CameraControlsContext.init(it)
+    }
     /** One actual cache root/lifetime shared by gallery IO and operator settings. */
     val mediaCacheRoot = com.opencapture.opencine.appkit.MonitorMediaCacheRoot(
         java.io.File(appContext.noBackupFilesDir, "OpenPocketCine/media"))
@@ -726,8 +731,8 @@ class AppModel(
             return NearbyCardCopy(
                 FoundCameraIdentity.listTitle(name, model),
                 FoundCameraIdentity.listSubtitle(name, model, found?.model?.family ?: "other") +
-                    if (found?.model?.verified == false) " · unverified" else "",
-                "Needs approval on the camera",
+                    if (found?.model?.verified == false) " · " + AppContextHolder.appContext.getString(R.string.pairing_unverified) else "",
+                AppContextHolder.appContext.getString(R.string.pairing_needs_approval),
             )
         }
         /** The records every earlier build reads, kept mirrored (SHELL-02 D11). */

@@ -43,6 +43,8 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import com.opencapture.openpocketcine.R
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -224,11 +226,11 @@ fun MultiviewScreen(model: AppModel, session: MultiviewSession, onClose: () -> U
     session.error?.let { message ->
         AlertDialog(
             onDismissRequest = { session.error = null },
-            title = { Text("Multiview") },
+            title = { Text(stringResource(R.string.multiview_title)) },
             text = { Text(message) },
-            confirmButton = { TextButton(onClick = { session.error = null }) { Text("OK") } },
+            confirmButton = { TextButton(onClick = { session.error = null }) { Text(stringResource(R.string.multiview_ok)) } },
             dismissButton = if (session.hasPendingCleanup) {
-                { TextButton(onClick = { session.error = null; close.value() }) { Text("Close anyway") } }
+                { TextButton(onClick = { session.error = null; close.value() }) { Text(stringResource(R.string.multiview_close_anyway)) } }
             } else null,
         )
     }
@@ -242,7 +244,7 @@ fun MultiviewScreen(model: AppModel, session: MultiviewSession, onClose: () -> U
                     closeStage()
                 }) { Text(MultiviewNetworkRestore.CLOSE_ACTION) }
             },
-            dismissButton = { TextButton(onClick = { showLeave = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showLeave = false }) { Text(stringResource(R.string.multiview_cancel)) } },
         )
     }
 }
@@ -318,7 +320,7 @@ internal fun MultiviewStageContent(
         lut = assigned.any { it.lutEnabled },
         busy = session.busy, closing = session.closing, interactive = interactive,
         network = MultiviewStageButton(
-            "Shared Wi-Fi", MonitorIcon.WIFI, enabled = !session.busy && !session.connectingCameras,
+            stringResource(R.string.multiview_shared_wifi), MonitorIcon.WIFI, enabled = !session.busy && !session.connectingCameras,
             identifier = "multiview.network", action = onNetwork,
         ),
     ) { slot -> picture(session.tiles[slot]) }
@@ -445,6 +447,7 @@ private fun MultiviewNetworkSetup(
     complete: () -> Unit,
 ) {
     val saved = remember { session.savedNetworks().asStationNetworks() }
+    val connectFailed = stringResource(R.string.multiview_could_not_connect)
     StationNetworkSetup(
         brand = POCKET_STATION_BRAND,
         wifiNameAccess = rememberWifiNameAccess(),
@@ -456,7 +459,7 @@ private fun MultiviewNetworkSetup(
             session.selectNetworkSource(network.hotspot)
             session.selectNetwork(network.ssid)
             session.password = network.password
-            if (session.configureNetwork()) null else session.networkSetupError ?: "Could not connect. Try again."
+            if (session.configureNetwork()) null else session.networkSetupError ?: connectFailed
         }, cancel = cancel, complete = complete,
         lockedNetwork = if (session.tiles.any { it.camera != null }) {
             StationNetwork(session.ssid, "", session.usePhoneHotspot)

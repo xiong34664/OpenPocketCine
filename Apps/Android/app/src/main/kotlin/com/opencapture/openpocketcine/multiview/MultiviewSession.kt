@@ -1,5 +1,6 @@
 package com.opencapture.openpocketcine.multiview
 
+import com.opencapture.openpocketcine.R
 import com.opencapture.opencine.dji.applyAttitude
 import com.opencapture.opencine.dji.fromJson
 import com.opencapture.opencine.dji.toJson
@@ -280,7 +281,7 @@ class MultiviewSession(
         internal var plan by mutableStateOf(FeedEffectsRenderPlan.IDENTITY)
         /** Camera settings' preview owner; the tile's existing present tap feeds it while set. */
         internal var previewOwner by mutableStateOf<Any?>(null)
-        var lutCaption by mutableStateOf("Auto LUT")
+        var lutCaption by mutableStateOf(app.getString(R.string.multiview_auto_lut))
         var hasPicture by mutableStateOf(false)
         var publishing: Boolean
             get() = member.publishing
@@ -487,7 +488,7 @@ class MultiviewSession(
             }
             val proven = reply?.payload
             if (proven == null || (expecting != null && !proven.contentEquals(expecting))) {
-                throw MultiviewFailure.Message("This network connection did not identify the selected camera.")
+                throw MultiviewFailure.Message(app.getString(R.string.multiview_not_identified))
             }
             return proven
         }
@@ -706,7 +707,7 @@ class MultiviewSession(
             ),
             scope = scope,
             budget = MultiviewQualificationPolicy.budget,
-            failureMessage = { it.message ?: "Could not connect" },
+            failureMessage = { it.message ?: app.getString(R.string.multiview_connect_failed) },
             // Android probes 24 hosts at a time (the handbook's number; iOS 64).
             probeWidth = 24,
             clock = SystemClock::elapsedRealtime,

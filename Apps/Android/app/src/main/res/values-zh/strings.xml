@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenPocketCine</string>
+    <string name="startup_wordmark">OPENPOCKETCINE</string>
+
+    <!-- Pairing wizard -->
+    <string name="pairing_body_1">打开相机，让手机靠近。Pocket 和 Nano 都会出现，选择你想要的那台。</string>
+    <string name="pairing_body_2">如果相机显示「批准」（Approve），在相机屏幕上点它。首次配对可能需要等待最多 90 秒。</string>
+    <string name="pairing_body_3">我们通过蓝牙读取相机的网络，然后帮你加入它的 Wi-Fi。</string>
+    <string name="pairing_body_4">视频链路一建立，曝光、LUT 和示波器就会实时生效。</string>
+    <string name="pairing_approve_1">寻找「批准 / 配对」提示</string>
+    <string name="pairing_approve_2">在相机屏幕上点它</string>
+    <string name="pairing_join_1">让相机保持开启，它会自己建立 Wi-Fi</string>
+    <string name="pairing_join_2">在 5.8 GHz 下大约需要一分钟；我们会持续尝试</string>
+    <string name="pairing_open_settings">打开设置</string>
+    <string name="pairing_allow">允许 %1$s</string>
+    <string name="pairing_turn_bluetooth_on">打开蓝牙</string>
+    <string name="pairing_needs_approval">需要在相机上批准</string>
+    <string name="pairing_unverified">未验证</string>
+    <string name="pairing_precheck">配对前，关闭 DJI Frame Tap 并强制退出 DJI Mimo。</string>
+    <string name="pairing_still_looking">%1$s 请确保相机已开机并激活，然后靠近一些。</string>
+
+    <!-- Capture sheet -->
+    <string name="capture_setting_not_available">该设置不可用</string>
+    <string name="capture_audio_channel">声道</string>
+    <string name="capture_audio_wind">降风噪</string>
+    <string name="capture_audio_direction">指向性</string>
+    <string name="capture_audio_vocal">人声增强</string>
+    <string name="capture_audio_refused">音频控制被拒绝</string>
+    <string name="capture_focus">对焦 %1$s</string>
+
+    <!-- Operator setup -->
+    <string name="setup_protocol">相机控制通过蓝牙和相机 Wi-Fi 使用 DUML 通信，无需捆绑或依赖 DJI SDK。</string>
+    <string name="setup_terms_help">你可以如何使用 OpenPocketCine。</string>
+
+    <!-- Settings -->
+    <string name="settings_color_white">白色</string>
+    <string name="settings_color_amber">琥珀色</string>
+    <string name="settings_color_red">红色</string>
+    <string name="settings_color_cyan">青色</string>
+    <string name="settings_color_green">绿色</string>
+    <string name="settings_color_blue">蓝色</string>
+    <string name="settings_close">关闭</string>
+
+    <!-- LUT picker -->
+    <string name="lut_custom_hint">导入的 LUT 会出现在这里。自动始终使用内置或 DJI LUT。</string>
+    <string name="lut_no_look">没有适合此颜色 / 相机的 LUT</string>
+    <string name="lut_official_cube">官方 DJI Rec.709 cube</string>
+    <string name="lut_camera_looks">适合此颜色 / 相机的官方 DJI LUT</string>
+
+    <!-- Multiview -->
+    <string name="multiview_returning">正在让相机恢复各自的 Wi-Fi…</string>
+    <string name="multiview_try_experimental">尝试实验性共享 Wi-Fi</string>
+    <string name="multiview_try_experimental_preview">尝试实验性共享 Wi-Fi · 预览不可用</string>
+    <string name="multiview_join_each">每台相机都会加入 %1$s。如相机提示，请在相机上批准。</string>
+    <string name="multiview_title">多机监看</string>
+    <string name="multiview_ok">确定</string>
+    <string name="multiview_close_anyway">仍然关闭</string>
+    <string name="multiview_cancel">取消</string>
+    <string name="multiview_shared_wifi">共享 Wi-Fi</string>
+    <string name="multiview_could_not_connect">无法连接，请重试。</string>
+    <string name="multiview_connect_failed">无法连接</string>
+    <string name="multiview_camera_settings">相机设置</string>
+    <string name="multiview_close_camera_settings">关闭相机设置</string>
+    <string name="multiview_reconnect_before_settings">更改设置前请先重新连接这台相机。</string>
+    <string name="multiview_settings_when_ready">相机连接就绪后即可使用相机设置。</string>
+    <string name="multiview_connection_attention">连接需要关注</string>
+    <string name="multiview_restoring_picture">正在恢复画面…</string>
+    <string name="multiview_waiting_picture">等待画面…</string>
+    <string name="multiview_reconnect">重新连接</string>
+    <string name="multiview_remove">移除</string>
+    <string name="multiview_remove_camera">移除相机</string>
+    <string name="multiview_open_live_view">打开实时取景</string>
+    <string name="multiview_stop_recording">停止录制</string>
+    <string name="multiview_start_recording">开始录制</string>
+    <string name="multiview_disable_auto_lut">关闭自动 LUT</string>
+    <string name="multiview_enable_auto_lut">开启自动 LUT</string>
+    <string name="multiview_remove_tile_note">移除此机位可为其他相机启用「全部录制」。</string>
+    <string name="multiview_add_camera">添加相机</string>
+    <string name="multiview_auto_lut">自动 LUT</string>
+    <string name="multiview_check_network">请检查网络名称和密码。</string>
+    <string name="multiview_save_cleanup_failed">无法保存相机 Wi-Fi 清理，请重试。</string>
+    <string name="multiview_restore_failed">无法恢复相机 Wi-Fi。请保持相机开机并关闭多机监看重试。</string>
+    <string name="multiview_preview_unavailable_model">该相机型号暂不支持多机监看预览。</string>
+    <string name="multiview_connecting_approve">连接中 · 请在相机上批准</string>
+    <string name="multiview_waking_wifi">正在唤醒相机 Wi-Fi</string>
+    <string name="multiview_nano_wake_failed">Nano 未确认唤醒其 Wi-Fi。请保持开机并重试。</string>
+    <string name="multiview_could_not_connect_preview">无法连接预览</string>
+    <string name="multiview_restore_preview_failed">无法恢复预览。请点击「重新连接」重试。</string>
+    <string name="multiview_finding_camera">正在 Wi-Fi 上寻找相机 · %1$d / 2</string>
+    <string name="multiview_find_failed">在共享 Wi-Fi 上找不到这台相机。请确认两台设备在同一网络且已关闭客户端隔离，然后点击「重新连接」。</string>
+    <string name="multiview_discovery_address">相机发现返回了不可用的地址。请点击「重新连接」重新搜索。</string>
+    <string name="multiview_connecting_preview">正在连接普通预览</string>
+    <string name="multiview_not_identified">此网络连接未能识别所选相机。</string>
+    <string name="multiview_waiting_video">等待视频</string>
+    <string name="multiview_exposure">曝光</string>
+    <string name="multiview_wifi_join_verified">Wi-Fi 加入已验证 · 暂不支持预览</string>
+    <string name="multiview_shared_network_unavailable">共享网络不可用。请重新加入后重连此相机。</string>
+    <string name="multiview_reconnecting">正在重连…</string>
+    <string name="multiview_return_failed">部分相机无法返回各自的 Wi-Fi。请保持它们开机并再次关闭多机监看重试。</string>
+    <string name="multiview_live_status">实时 · 视频模式</string>
+
+    <!-- Multiview tally / readout abbreviations -->
+    <string name="multiview_tally_wait">等待</string>
+    <string name="multiview_tally_rec_q">REC ?</string>
+    <string name="multiview_tally_hold">保持</string>
+    <string name="multiview_tally_rec_dash">REC —</string>
+    <string name="multiview_tally_rec_time">REC %1$d:%2$02d</string>
+    <string name="multiview_tally_stby">待机</string>
+    <string name="multiview_readout_iso">ISO</string>
+    <string name="multiview_readout_shutter">快门</string>
+    <string name="multiview_readout_wb">白平衡</string>
+    <string name="multiview_readout_focus">对焦</string>
+    <string name="multiview_readout_auto">自动</string>
+</resources>

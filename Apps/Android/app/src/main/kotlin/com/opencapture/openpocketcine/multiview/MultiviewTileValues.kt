@@ -1,5 +1,8 @@
 package com.opencapture.openpocketcine.multiview
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.opencapture.openpocketcine.R
 import com.opencapture.opencine.appkit.MultiviewCameraAction
 import com.opencapture.opencine.appkit.MultiviewReadout
 import com.opencapture.opencine.appkit.MultiviewRecordContext
@@ -36,6 +39,7 @@ internal data class MultiviewTileReadouts(
     val recovery: String?,
 )
 
+@Composable
 internal fun multiviewTileReadouts(
     index: Int, name: String, model: String, settings: CameraStatus, timecode: String?,
     recordingObservation: Boolean?, recordingBusy: Boolean,
@@ -61,31 +65,34 @@ internal fun multiviewTileReadouts(
         recording = recording, isRecording = recordingObservation == true,
         format = "$resolution $fps · $color",
         recovery = when {
-            failure != null -> "Connection needs attention"
-            recovering -> "Restoring picture…"
-            !hasPicture -> "Waiting for picture…"
+            failure != null -> stringResource(R.string.multiview_connection_attention)
+            recovering -> stringResource(R.string.multiview_restoring_picture)
+            !hasPicture -> stringResource(R.string.multiview_waiting_picture)
             else -> null
         },
     )
 }
 
+@Composable
 internal fun multiviewExposureReadouts(settings: CameraStatus): List<Pair<String, String>> = listOf(
-    "ISO" to if (settings.iso > 0) settings.iso.toString() else "—",
-    "SHUTTER" to if (settings.shutterDenom > 0) "1/${settings.shutterDenom}" else "—",
-    "WB" to when {
-        settings.wbMode == CameraCommands.WB_AUTO -> "Auto"
+    stringResource(R.string.multiview_readout_iso) to if (settings.iso > 0) settings.iso.toString() else "—",
+    stringResource(R.string.multiview_readout_shutter) to if (settings.shutterDenom > 0) "1/${settings.shutterDenom}" else "—",
+    stringResource(R.string.multiview_readout_wb) to when {
+        settings.wbMode == CameraCommands.WB_AUTO -> stringResource(R.string.multiview_readout_auto)
         settings.wbMode < 0 -> "—"
         settings.wbKelvin > 0 -> "${settings.wbKelvin}K"
         else -> "—"
     },
-    "FOCUS" to settings.focusLabel,
+    stringResource(R.string.multiview_readout_focus) to settings.focusLabel,
 )
 
 /** The program readouts and Grid's in-tile row. */
+@Composable
 internal fun multiviewStageReadouts(settings: CameraStatus): List<MultiviewReadout> =
     multiviewExposureReadouts(settings).map { (title, value) -> MultiviewReadout(title, value) }
 
 /** The shared stage's values for one slot, null while it is empty: Pocket's camera readings with the stage's own. */
+@Composable
 internal fun MultiviewSession.stageTile(index: Int): MultiviewTile? {
     val tile = tiles[index]
     val camera = tile.camera ?: return null

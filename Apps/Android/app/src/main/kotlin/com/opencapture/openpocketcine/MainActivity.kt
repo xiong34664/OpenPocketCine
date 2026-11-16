@@ -9,6 +9,7 @@ import com.opencapture.openpocketcine.media.PocketMediaShare
 import com.opencapture.opencine.vocabulary.MediaHTTP
 import com.opencapture.opencine.appkit.DiscoveryRestart
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.opencapture.opencine.appkit.MonitorActivityLaunch
@@ -226,6 +227,7 @@ private fun OpenPocketCineApp(model: AppModel) {
  * Pocket and Nano pages, and Nearby devices or Bluetooth as the primary action while discovery
  * cannot run.
  */
+@Composable
 internal fun pairingWizard(
     label: String,
     joinedNetwork: String?,
@@ -235,20 +237,20 @@ internal fun pairingWizard(
     radioOn: Boolean,
 ) = PairingWizard(
     bodies = listOf(
-        "Turn the camera on and keep the phone nearby. Pocket and Nano both appear. Choose the one you want.",
-        "If the camera shows Approve, tap it on that camera's screen. First-time pairing can wait up to 90 seconds.",
-        "We read the camera's network over Bluetooth, then join its Wi-Fi for you.",
-        "Exposure, LUTs and scopes go live as soon as the video link is up.",
+        stringResource(R.string.pairing_body_1),
+        stringResource(R.string.pairing_body_2),
+        stringResource(R.string.pairing_body_3),
+        stringResource(R.string.pairing_body_4),
     ),
-    approveLines = listOf("Look for an Approve / pairing prompt", "Tap it on the camera screen"),
-    joinLines = listOf("Leave the camera on. It brings up its own Wi-Fi", "On 5.8 GHz that can take about a minute; we keep trying"),
+    approveLines = listOf(stringResource(R.string.pairing_approve_1), stringResource(R.string.pairing_approve_2)),
+    joinLines = listOf(stringResource(R.string.pairing_join_1), stringResource(R.string.pairing_join_2)),
     label = label,
     joinedNetwork = joinedNetwork,
     vpnActive = vpnActive,
     blocker = when {
-        !granted && needsSettings -> "Open Settings"
-        !granted -> "Allow ${DiscoveryPermissions.settingsName(DiscoveryPermissions.discovery()).lowercase()}"
-        !radioOn -> "Turn Bluetooth on"
+        !granted && needsSettings -> stringResource(R.string.pairing_open_settings)
+        !granted -> stringResource(R.string.pairing_allow, DiscoveryPermissions.settingsName(DiscoveryPermissions.discovery()).lowercase())
+        !radioOn -> stringResource(R.string.pairing_turn_bluetooth_on)
         else -> null
     },
 )

@@ -2,4 +2,114 @@
 <resources>
     <string name="app_name">OpenPocketCine</string>
     <string name="startup_wordmark">OPENPOCKETCINE</string>
+
+    <!-- Pairing wizard -->
+    <string name="pairing_body_1">Turn the camera on and keep the phone nearby. Pocket and Nano both appear. Choose the one you want.</string>
+    <string name="pairing_body_2">If the camera shows Approve, tap it on that camera\'s screen. First-time pairing can wait up to 90 seconds.</string>
+    <string name="pairing_body_3">We read the camera\'s network over Bluetooth, then join its Wi-Fi for you.</string>
+    <string name="pairing_body_4">Exposure, LUTs and scopes go live as soon as the video link is up.</string>
+    <string name="pairing_approve_1">Look for an Approve / pairing prompt</string>
+    <string name="pairing_approve_2">Tap it on the camera screen</string>
+    <string name="pairing_join_1">Leave the camera on. It brings up its own Wi-Fi</string>
+    <string name="pairing_join_2">On 5.8 GHz that can take about a minute; we keep trying</string>
+    <string name="pairing_open_settings">Open Settings</string>
+    <string name="pairing_allow">Allow %1$s</string>
+    <string name="pairing_turn_bluetooth_on">Turn Bluetooth on</string>
+    <string name="pairing_needs_approval">Needs approval on the camera</string>
+    <string name="pairing_unverified">unverified</string>
+    <string name="pairing_precheck">Before pairing, turn off DJI Frame Tap and force quit DJI Mimo.</string>
+    <string name="pairing_still_looking">%1$s Make sure the camera is on and activated, then move closer.</string>
+
+    <!-- Capture sheet -->
+    <string name="capture_setting_not_available">Setting not available</string>
+    <string name="capture_audio_channel">Channel</string>
+    <string name="capture_audio_wind">Wind</string>
+    <string name="capture_audio_direction">Direction</string>
+    <string name="capture_audio_vocal">Vocal</string>
+    <string name="capture_audio_refused">Audio control refused</string>
+    <string name="capture_focus">FOCUS %1$s</string>
+
+    <!-- Operator setup -->
+    <string name="setup_protocol">Camera control speaks DUML over Bluetooth and the camera\'s Wi-Fi. No DJI SDK is bundled or required.</string>
+    <string name="setup_terms_help">How you can use OpenPocketCine.</string>
+
+    <!-- Settings -->
+    <string name="settings_color_white">White</string>
+    <string name="settings_color_amber">Amber</string>
+    <string name="settings_color_red">Red</string>
+    <string name="settings_color_cyan">Cyan</string>
+    <string name="settings_color_green">Green</string>
+    <string name="settings_color_blue">Blue</string>
+    <string name="settings_close">Close</string>
+
+    <!-- LUT picker -->
+    <string name="lut_custom_hint">Imported looks land here. Auto stays on Built-in or DJI.</string>
+    <string name="lut_no_look">No matching look for this color / camera</string>
+    <string name="lut_official_cube">Official DJI Rec.709 cube</string>
+    <string name="lut_camera_looks">Official DJI looks for this color / camera</string>
+
+    <!-- Multiview -->
+    <string name="multiview_returning">Returning cameras to their Wi-Fi…</string>
+    <string name="multiview_try_experimental">Try experimental shared Wi-Fi</string>
+    <string name="multiview_try_experimental_preview">Try experimental shared Wi-Fi · Preview unavailable</string>
+    <string name="multiview_join_each">Each camera will join %1$s. Approve on the camera if asked.</string>
+    <string name="multiview_title">Multiview</string>
+    <string name="multiview_ok">OK</string>
+    <string name="multiview_close_anyway">Close anyway</string>
+    <string name="multiview_cancel">Cancel</string>
+    <string name="multiview_shared_wifi">Shared Wi-Fi</string>
+    <string name="multiview_could_not_connect">Could not connect. Try again.</string>
+    <string name="multiview_connect_failed">Could not connect</string>
+    <string name="multiview_camera_settings">Camera settings</string>
+    <string name="multiview_close_camera_settings">Close camera settings</string>
+    <string name="multiview_reconnect_before_settings">Reconnect this camera before changing settings.</string>
+    <string name="multiview_settings_when_ready">Camera settings are available when its connection is ready.</string>
+    <string name="multiview_connection_attention">Connection needs attention</string>
+    <string name="multiview_restoring_picture">Restoring picture…</string>
+    <string name="multiview_waiting_picture">Waiting for picture…</string>
+    <string name="multiview_reconnect">Reconnect</string>
+    <string name="multiview_remove">Remove</string>
+    <string name="multiview_remove_camera">Remove camera</string>
+    <string name="multiview_open_live_view">Open Live View</string>
+    <string name="multiview_stop_recording">Stop recording</string>
+    <string name="multiview_start_recording">Start recording</string>
+    <string name="multiview_disable_auto_lut">Disable Auto LUT</string>
+    <string name="multiview_enable_auto_lut">Enable Auto LUT</string>
+    <string name="multiview_remove_tile_note">Remove this tile to enable Record all for your other cameras.</string>
+    <string name="multiview_add_camera">Add camera</string>
+    <string name="multiview_auto_lut">Auto LUT</string>
+    <string name="multiview_check_network">Check the network name and password.</string>
+    <string name="multiview_save_cleanup_failed">Could not save camera Wi-Fi cleanup. Try again.</string>
+    <string name="multiview_restore_failed">Camera Wi-Fi could not be restored. Keep it powered on and close Multiview to retry.</string>
+    <string name="multiview_preview_unavailable_model">Multiview preview is not available for this camera model yet.</string>
+    <string name="multiview_connecting_approve">Connecting · approve on camera</string>
+    <string name="multiview_waking_wifi">Waking camera Wi-Fi</string>
+    <string name="multiview_nano_wake_failed">The Nano did not confirm its Wi-Fi wake. Keep it powered on and try again.</string>
+    <string name="multiview_could_not_connect_preview">Could not connect preview</string>
+    <string name="multiview_restore_preview_failed">Could not restore preview. Tap Reconnect to try again.</string>
+    <string name="multiview_finding_camera">Finding camera on Wi-Fi · %1$d of 2</string>
+    <string name="multiview_find_failed">Could not find this camera on the shared Wi-Fi. Check that both devices use the same network and that client isolation is off, then tap Reconnect.</string>
+    <string name="multiview_discovery_address">Camera discovery returned an unavailable address. Tap Reconnect to search again.</string>
+    <string name="multiview_connecting_preview">Connecting normal preview</string>
+    <string name="multiview_not_identified">This network connection did not identify the selected camera.</string>
+    <string name="multiview_waiting_video">Waiting for video</string>
+    <string name="multiview_exposure">Exposure</string>
+    <string name="multiview_wifi_join_verified">Wi-Fi join verified · Preview not supported yet</string>
+    <string name="multiview_shared_network_unavailable">Shared network unavailable. Rejoin it, then reconnect this camera.</string>
+    <string name="multiview_reconnecting">Reconnecting…</string>
+    <string name="multiview_return_failed">Some cameras could not return to their own Wi-Fi. Keep them powered on and close Multiview again to retry.</string>
+    <string name="multiview_live_status">Live · Video mode</string>
+
+    <!-- Multiview tally / readout abbreviations -->
+    <string name="multiview_tally_wait">WAIT</string>
+    <string name="multiview_tally_rec_q">REC ?</string>
+    <string name="multiview_tally_hold">HOLD</string>
+    <string name="multiview_tally_rec_dash">REC —</string>
+    <string name="multiview_tally_rec_time">REC %1$d:%2$02d</string>
+    <string name="multiview_tally_stby">STBY</string>
+    <string name="multiview_readout_iso">ISO</string>
+    <string name="multiview_readout_shutter">SHUTTER</string>
+    <string name="multiview_readout_wb">WB</string>
+    <string name="multiview_readout_focus">FOCUS</string>
+    <string name="multiview_readout_auto">Auto</string>
 </resources>
