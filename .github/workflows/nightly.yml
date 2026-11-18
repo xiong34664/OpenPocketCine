@@ -4,9 +4,6 @@ name: Nightly
 # header layout matrix and the iPad storage oracle (docs/ci.md). A failure opens or updates the one
 # "Nightly CI failing on main" issue (label ci-nightly); the next passing night closes it.
 on:
-  schedule:
-    # Staggered with the other repositories so their macOS jobs do not queue behind each other.
-    - cron: "40 19 * * *"
   workflow_dispatch:
 
 permissions:
